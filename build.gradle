@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.plugin.lombok" version '2.4.20'
+}
+
+group = 'com.unisystechhub'
+version = '0.0.1-SNAPSHOT'
+description = 'TravelAgentSpringAI'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springAiVersion', "2.0.1")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
+    implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
+    implementation 'org.springframework.ai:spring-ai-vector-store-advisor'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.2.2'
+}
+
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

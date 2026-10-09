@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: TravelAgentSpringAI
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+
+    vectorstore:
+       pgvector:
+         initialize-schema: true
+         dimensions: 1536
+    mcp:
+      client:
+        enabled: true
+        streamable-http:
+          connections:
+            flights:
+             url: http://localhost:8081
+            hotels:
+              url: http://localhost:8082
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5532/spring_ai
+    username : postgres
+    password : postgres
+    driver-class-name: org.postgresql.Driver
+
+app:
+  weather:
+     api-key : ${WEATHER_API_KEY}
+  data:
+    pdfs:
+      path: data/pdfs
+    images:
+      path: data/images/
+    audio:
+      updload-dir: data/audio/
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
+    org.springframework.ai.chat: DEBUG
+    io:
+      modelcontextprotocol: DEBUG
